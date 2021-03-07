@@ -12,13 +12,13 @@ def match(user1, user2):
         print("Deixa quieto")
     elif (user1 == 1) and (user2 == 1):
         print("Bora")
-    elif (((user1 == 1) and (user2 == 2)) or ((user1 == 2) and (user2 ==1))):
+    elif ((user1 == 1 or 2) and (user2 == 2 or 1)):
         print("Deixa Quieto")
-    else:
-        print("Opção inválida !")
+    else:                         #Essa condição não está sendo satisfeita
+        print("Opção inválida !") #Quero que ela seja satisfeita usando 1 e 7
 
 #Função Principal
 print("Digite 1 - Solteiro\n Digite 2 - Casado")
-user1 = int (input("Digite o Estado Civil do Usuario 1"))
-user2 = int (input("Digite o Estado Civil do Usuario 2"))
+user1 = int (input("Digite o Estado Civil do Primeiro Usuario: "))
+user2 = int (input("Digite o Estado Civil do Segundo Usuario: "))
 match(user1, user2)

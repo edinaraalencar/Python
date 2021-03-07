@@ -1,18 +1,23 @@
-print("s=solteiro e c=casado")
-eu = str(input("Meu estado civil-->"))
-pessoa02= str(input("Diga o seu estado civil da segunda pessoa--> "))
+estado_civil = None #Cria variavel e não atribui valor
 
-def match(eu, pessoa02):
-    if eu == "s" and pessoa02 == "s":
-        return "Bora"
-    elif eu == "s" and pessoa02 == "c":
-        return "Deixa quieto"
-    elif eu == "c" and pessoa02 == "s":
-        return "Deixa quieto"
-    elif eu == "c" and pessoa02 == "c":
-        return "Deixa quieto"
+def estadoCivil (estado_civil): #Cria a função e passa um argumento
+    estado_civil = input ("Qual o estado civil-->") #A variavel recebe o valor digitado
+    return estado_civil #Guarda o valor digitado pelo usuario
+
+#estadoCivil (estado_civil)
+
+def match(eu, pessoa02): #A função precisa receber 2 estados civil
+    if (eu == pessoa02 == 's'): 
+        print("Bora")
+    elif (eu == pessoa02 == 'c'):
+        print("Deixa quieto")
+    elif ((eu == 'c') and (pessoa02 == 's')) or ((pessoa02 == 'c') and (eu == 's')):
+        print("Deixa quieto")
     else:
-        return "invalido, informe s=solteiro e c=casado"
+        print("Opção Inválida!") #Condição de controle de dados fora do esperado
 
-x = match(eu, pessoa02)
-print(x)
+print ("s=solteiro e c=casado")
+match(estadoCivil(estado_civil), estadoCivil(estado_civil)) #Função que recebe outra função como parametro
+
+
+

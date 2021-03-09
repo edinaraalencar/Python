@@ -1,23 +1,36 @@
-estado_civil = None #Cria variavel e não atribui valor
-
-def estadoCivil (estado_civil): #Cria a função e passa um argumento
-    estado_civil = input ("Qual o estado civil-->") #A variavel recebe o valor digitado
-    return estado_civil #Guarda o valor digitado pelo usuario
-
-#estadoCivil (estado_civil)
-
-def match(eu, pessoa02): #A função precisa receber 2 estados civil
-    if (eu == pessoa02 == 's'): 
-        print("Bora")
-    elif (eu == pessoa02 == 'c'):
-        print("Deixa quieto")
-    elif ((eu == 'c') and (pessoa02 == 's')) or ((pessoa02 == 'c') and (eu == 's')):
-        print("Deixa quieto")
+def consulta_desconto (preço):
+    if preço <= 20:
+        desconto = preço - preço * (20/100)
+        categoria = 5
+        print (f'Categoria: {categoria}\nParabéns! Seu desconto é de 20%')
+        print (f'De R${preço} por apenas R${desconto}')
+    elif 20 < preço <= 50: #Alterei o > pelo <
+        desconto = preço - preço * (15/100)
+        categoria = 4
+        print (f'Categoria: {categoria}\nParabéns! Seu desconto é de 15%')
+        print (f'De R${preço} por apenas R${desconto}')
+    elif 50 < preço <= 100:
+        desconto = preço - preço * (10/100)
+        categoria = 3
+        print (f'Categoria: {categoria}\nParabéns! Seu desconto é de 10%')
+        print (f'De R${preço} por apenas R${desconto}')
+    elif 100 < preço <= 500:
+        desconto = preço - preço * (7/100)
+        categoria = 2
+        print (f'Categoria: {categoria}\nParabéns! Seu desconto é de 7%')
+        print (f'De R${preço} por apenas R${desconto}')
     else:
-        print("Opção Inválida!") #Condição de controle de dados fora do esperado
+        desconto = preço - preço * (5/100)
+        categoria = 1
+        print (f'Categoria: {categoria}\nParabéns! Seu desconto é de 5%')
+        print (f'De R${preço} por apenas R${desconto}')
 
-print ("s=solteiro e c=casado")
-match(estadoCivil(estado_civil), estadoCivil(estado_civil)) #Função que recebe outra função como parametro
 
-
-
+#Programa Principal
+print ('-'*50)
+print ('        SISTEMA PARA CONSULTA DE DESCONTO              ')
+print ('-'*50)
+print ('\n')
+print ('O Desconto do Produto será de acordo com a Categoria')
+preço = float (input('Digite o preço do produto: '))
+consulta_desconto(preço)  

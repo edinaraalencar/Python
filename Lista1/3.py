@@ -1,4 +1,5 @@
-print("3 - Crie uma função que retorne o resto da divisão do\nresultado da função da questão anterior por 2")
+print("""3 - Crie uma função que retorne o resto da divisão do resultado da função 
+da questão anterior por 2.\n""")
 
 def função(a, b):
     return ((a * 2) * (b * 3))

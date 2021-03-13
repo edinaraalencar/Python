@@ -1,5 +1,6 @@
 
-print("1 - Converta as seguintes expressões matemáticas\npara que possam ser calculadas usando Python: ")
+print("""1 - Converta as seguintes expressões matemáticas para que possam ser calculadas
+usando Python: \n""")
 
 print("a) 10 + 20 x 30")
 print("b) 4² / 3")

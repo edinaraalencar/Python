@@ -5,8 +5,8 @@ pares = [x for x in range(0, 11, 2)]
 impares = [x for x in range (1, 10, 2)]
 
 def teste(impares, pares):
-    list = pares + impares
-    print(list)
+    numeros = pares + impares
+    print(numeros)
 
 print("Nova Lista criada: ")
 teste(impares, pares)

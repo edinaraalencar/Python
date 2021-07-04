@@ -1,6 +1,6 @@
 '''
-Implementei a chamada das funções falta o loop de até 4 compartilhamentos
-E testar com valores menores para ver se tem necessidade de acrecentar else nos controles
+Implementei o loop de até 4 compartilhamentos
+Está dando erro no valor 12
 '''
 
 
@@ -20,8 +20,10 @@ def calcular_clique(visualizacao):
 
     clique = (visualizacao // 100) * 12 #  A cada 100 pessoas que visualizam 12 clicam 
     
-    #if ((visualizacao % 100) != 0): # Está certo !
-    resto_visualizacao += visualizacao % 100
+    if ((visualizacao % 100) != 0): # Está certo !
+        resto_visualizacao += visualizacao % 100
+
+    #print(f'Resto visu em clique: {resto_visualizacao}')
 
     return clique
 
@@ -55,25 +57,57 @@ def menu():
 
     if valor_digitado <= 6:
         print(f'Valor da visualização: {calcular_visualização(valor_digitado)}')
-    else:
-        soma1 = (calcular_visualizacao_compartilhamento(calcular_compartilhamento(calcular_clique(calcular_visualização(valor_digitado)))) + resto_visualizacao)
-        print(f'Soma 1: {soma1}')
 
-        if soma1 >= 100:
+    elif valor_digitado <= 9:
+        visualizacao = calcular_visualização(valor_digitado)
+        visualizacao_compartilhamento = calcular_visualizacao_compartilhamento(calcular_compartilhamento(calcular_clique(visualizacao)))
+        print(f'Valor da visualização: {visualizacao + visualizacao_compartilhamento}')
+
+    else:
+        visualizacao = calcular_visualização(valor_digitado) # Antes era calcular visualização do compartilhamento
+        visualizacao_compartilhamento = calcular_visualizacao_compartilhamento(calcular_compartilhamento(calcular_clique(calcular_visualização(valor_digitado))))
+        
+        soma = visualizacao + visualizacao_compartilhamento
+
+        
+        #print(f'Soma: {soma}')
+        #print(f'Visualização: {visualizacao}')
+        #print(f'Visualização Compartilhamento: {visualizacao_compartilhamento}')
+
+        #print(f'Soma 1: {soma1}')
+
+        i = 0
+        
+
+        soma1 = visualizacao_compartilhamento + resto_visualizacao
+        #print(f'Soma1: {soma1}')
+        resto_visu = resto_visualizacao
+            
+        while i < 3:      #Troca por while
             soma2 = calcular_clique(soma1) + resto_clique
             print(f'Soma 2: {soma2}')
-
+            print(f'Soma Total: {soma}')
+                
             if soma2 >= 20:
                 soma3 = calcular_compartilhamento(soma2) + resto_compartilhamento
                 print(f'Soma 3: {soma3}')
+                print(soma)
 
                 if soma3 >= 3:
-                    soma4 = calcular_visualizacao_compartilhamento(soma3)
+                    soma4 = calcular_visualizacao_compartilhamento(soma3) + resto_visu
+                    print(f'Resto visualização: {resto_visu}') # Com o valor 11 Está dando 80 e é 50
+                    prox_visualizacao = calcular_visualizacao_compartilhamento(soma3)
                     print(f'Soma 4: {soma4}')
-                    soma1 += soma4
-                    print(soma1)
-
-        print(calcular_visualização(valor_digitado) + soma1)
+                    soma1 = soma4 # Tinha +
+                    soma += prox_visualizacao
+                    print(f'Soma Total2: {soma}')
+                    i += 1 
+                
+                     
+    #print(f'Total de visualizações: {visualizacao}')
+    #print(f'Prox Visualização: {prox_visualizacao}')
+        print(f'Soma Total: {soma}')
+        
 
 
 '''

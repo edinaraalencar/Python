@@ -1,35 +1,6 @@
-'''
-- a cada 100 pessoas que visualizam o anúncio 12 clicam nele.
-- a cada 20 pessoas que clicam no anúncio 3 compartilham nas redes sociais.
-- cada compartilhamento nas redes sociais gera 40 novas visualizações.
-- 30 pessoas visualizam o anúncio original (não compartilhado) a cada R$ 1,00 investido.
-- o mesmo anúncio é compartilhado no máximo 4 vezes em sequência
-(1ª pessoa -> compartilha -> 2ª pessoa -> compartilha - > 3ª pessoa -> compartilha -> 4ª pessoa)
-
-'''
-# Crie um script em sua linguagem de programação preferida que receba o valor investido 
-# em reais e retorne uma projeção aproximada da quantidade máxima de pessoas que 
-# visualizarão o mesmo anúncio (considerando o anúncio original + os compartilhamentos)
-
+''' Penultima versão '''
 resto_visualizacao = 0
 resto_clique = 0
-resto_compartilhamento = 0
-
-# Função que calcula quantidade de cliques
-def calcular_clique(visualizacao):
-    clique = 0
-    global resto_visualizacao
-
-    num = visualizacao // 100 
-    resto_visualizacao += visualizacao % 100
-
-    if resto_visualizacao >= 100:
-        num = num + 1
-
-    while num > 0:
-        clique += 12
-        num -= 1 
-    return clique
 
 # Função que calcula quantidade de visualizações
 def calcular_visualização(valor_investido):
@@ -37,79 +8,99 @@ def calcular_visualização(valor_investido):
 
     return visualizacao
 
+def calcular_clique(visualizacao):
+    global resto_visualizacao
+    clique = (visualizacao // 100) * 12 
+    
+    if ((visualizacao % 100) != 0): 
+        resto_visualizacao += visualizacao % 100
+
+    return clique
 
 def calcular_compartilhamento(clique):
-    compartilhamento = 0
     global resto_clique
-
-    num = clique // 20
+    compartilhamento = (clique // 20) * 3
     resto_clique += clique % 20
-    while num > 0:
-        compartilhamento += 3
-        num -= 1
+
+    return compartilhamento
+
+def calcular_visualizacao_compartilhamento(compartilhamento):
+    visualizacao_compartilhamento = compartilhamento * 40
+
+    return visualizacao_compartilhamento
+
+def menu():
     
-    return compartilhamento * 40
+    while True:
+        valor_digitado = input('Digite o valor investido: R$ ')
 
-def calcular_max_compartilhamento(compartilhamento):
-    #Função sem uso
-    #Ainda será implementada
-    visualizacao = 0
-    global resto_visualizacao
-
-    #compartilhamento = calcular_compartilhamento(calcular_clique(calcular_visualização(valor_digitado)))
-    if compartilhamento == 0:
-        visualizacao = 0
-    elif compartilhamento == 1:
-        visualizacao = 40
-    elif compartilhamento == 2:
-        visualizacao = 80
-    elif compartilhamento == 3:
-        visualizacao = 120
-    else:
-        visualizacao = 160
-
-    return visualizacao
+        if valor_digitado.isdigit():
+            valor_digitado = int(valor_digitado)
+            break
+        else:
+            print('\nPor favor, digite um número inteiro.\n')
+            continue
     
 
-def calcular_total(valor):
-    """Calcula quantidade total de visualizações.
-   
-    Exemplo de uso:
-    >>> calcular_total(8)
-    360
-    >>> calcular_total(48)
-    6
-    """
-    visualizacao = calcular_visualização(valor)
-    compartilhamento = calcular_compartilhamento(calcular_clique(calcular_visualização(valor)))
-  
-    if valor <= 6:
-       print(f'Quantidade de visualizações: {visualizacao}')
-    if valor >= 7:
-        visualizacao += compartilhamento
-        #print(f'Quantidade de visualizações: {(calcular_visualização(valor)) + (calcular_compartilhamento(calcular_clique(calcular_visualização(valor)))))
-        print(f'Quantidade de visualizações: {visualizacao}')
+    if valor_digitado <= 6:
+        print(f'Valor da visualização: {calcular_visualização(valor_digitado)}')
 
-while True:
+    elif valor_digitado > 6 and valor_digitado <= 9:
+        visualizacao = calcular_visualização(valor_digitado)
+        visualizacao_compartilhamento = calcular_visualizacao_compartilhamento(calcular_compartilhamento(calcular_clique(visualizacao)))
+        print(f'Valor da visualização: {visualizacao + visualizacao_compartilhamento}')
 
-    valor_digitado = input('Digite o valor investido: R$ ')
-    if valor_digitado.isdigit():
-        valor_digitado = int(valor_digitado)
-        calcular_total(valor_digitado)
-        break
+    elif valor_digitado > 9 and valor_digitado <= 11:
+        visualizacao = calcular_visualização(valor_digitado) 
+        visualizacao_compartilhamento = calcular_visualizacao_compartilhamento(calcular_compartilhamento(calcular_clique(calcular_visualização(valor_digitado))))
+        
+        soma = visualizacao + visualizacao_compartilhamento
+        i = 0
+        soma1 = visualizacao_compartilhamento + resto_visualizacao
+        resto_visu = resto_visualizacao
+        resto_click = resto_clique
+
+        while i < 2:      
+            soma2 = calcular_clique(soma1) + resto_click
+                
+            if soma2 >= 20:
+                soma3 = calcular_compartilhamento(soma2)
+
+                if soma3 >= 3:
+                    soma4 = calcular_visualizacao_compartilhamento(soma3) + resto_visualizacao
+                    prox_visualizacao = calcular_visualizacao_compartilhamento(soma3)
+                    soma1 = soma4 
+                    soma += prox_visualizacao
+                    i += 1 
+
+                else:
+                    soma -= prox_visualizacao
+                    i += 1
+        print(f'Soma Total: {soma}')        
     else:
-        print('\nPor favor, digite um número inteiro.\n')
-        continue
+        visualizacao = calcular_visualização(valor_digitado) 
+        visualizacao_compartilhamento = calcular_visualizacao_compartilhamento(calcular_compartilhamento(calcular_clique(calcular_visualização(valor_digitado))))
+        
+        soma = visualizacao + visualizacao_compartilhamento
+        i = 0
+        soma1 = visualizacao_compartilhamento + resto_visualizacao
+        resto_visu = resto_visualizacao
+        resto_click = resto_clique
 
+        while i < 3:      
+            soma2 = calcular_clique(soma1) + resto_click
+                
+            if soma2 >= 20:
+                soma3 = calcular_compartilhamento(soma2) + resto_compartilhamento
 
-'''
-def _test():
-    import doctest, calculadora
-    return doctest.testmod(calculadora)
+                if soma3 >= 3:
+                    soma4 = calcular_visualizacao_compartilhamento(soma3) + resto_visu
+                    prox_visualizacao = calcular_visualizacao_compartilhamento(soma3)
+                    soma1 = soma4 
+                    soma += prox_visualizacao
+                    i += 1 
+                
+        print(f'Soma Total: {soma}')             
+    
 
-if __name__ == '__main__':
-    _test()
-'''
-
-#Versão 1.0 
-#Edinara Lima de Alencar
+menu()
